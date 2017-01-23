@@ -106,8 +106,8 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
 
 
 queue()
-  .defer(d3.csv, "summary_2.csv") // 67KB
-  .defer(d3.csv, "state_data_8.csv") // 67KB
+  .defer(d3.csv, "summary_3.csv") // 67KB
+  // .defer(d3.csv, "state_data_10.csv") // 67KB
   // .defer(d3.csv, "dma_data.csv") // 67KB
   // .defer(d3.csv, "woke_test.csv") // 67KB
   // .defer(d3.csv, "words.csv") // 67KB
@@ -119,7 +119,7 @@ queue()
 
 function ready(error
   ,summary
-  ,state_data
+  // ,state_data
   // ,dma_data
   // ,woke_test
   // ,words

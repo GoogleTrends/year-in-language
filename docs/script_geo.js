@@ -105,8 +105,8 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
 
 
 queue()
-  .defer(d3.csv, "summary_2.csv") // 67KB
-  .defer(d3.csv, "state_data_8.csv") // 67KB
+  .defer(d3.csv, "summary_3.csv") // 67KB
+  .defer(d3.csv, "state_data_10.csv") // 67KB
   // .defer(d3.csv, "dma_data.csv") // 67KB
   // .defer(d3.csv, "woke_test.csv") // 67KB
   // .defer(d3.csv, "words.csv") // 67KB
@@ -703,7 +703,6 @@ function ready(error
     topListItemDefinition.append("p")
       .attr("class","top-list-new-row-definition-text")
       .html(function(d){
-        console.log(smallMobile);
         if(smallMobile){
           return "what is the definition of <span class='definition-highlight'>"+d.term.replace(/\./g,' ')+"</span>";
         }
@@ -3938,8 +3937,6 @@ function ready(error
     // colorsHeat = d3.schemeRdPu[6];
     colorsHeat = ["#fff7f3", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177"]
     colorsHeat = ["#fff7f3", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177", "#49006a"];
-
-    // console.log(d3.schemeRdPu[8]);
 
 
     var heatMapLegend = d3.select(".geo-heat-map-legend")

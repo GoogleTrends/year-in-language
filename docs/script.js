@@ -105,9 +105,9 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
 
 
 queue()
-  .defer(d3.csv, "summary_3.csv") // 67KB
-  .defer(d3.csv, "state_data_9.csv") // 67KB
-  .defer(d3.json, "us_map_state.json")
+  .defer(d3.csv, "summary_3.csv") // 200KB
+  .defer(d3.csv, "state_data_10.csv") // 900KB
+  .defer(d3.json, "us_map_state.json") //600KB
   .await(ready);
 
 function ready(error
