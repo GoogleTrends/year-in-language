@@ -493,7 +493,7 @@ function ready(error
       ;
 
     var titles = {
-      first:{main:"top rising words in 2016",sub:"Words, ranked by Search interest&#185; growth, 2016"},
+      first:{main:"top rising definitions in 2016",sub:"Word definitions, ranked by Search interest&#185; growth"},
       second:{topMain:-18,topSub:4,main:"2016 words in context",sub:"Search interest&#185; for historically popular words vs. 2016"},
       third:{topMain:-60,topSub:-35,main:"2016 words vs. Peak &ldquo;Selfie&rdquo;",sub:"Maximum Search interest&#185; for historically popular words"},
       fourth:{main:"The Rise And Fall Of 50+ Words",sub:"Search interest&#185; of words terms, 2013 - 2016"}

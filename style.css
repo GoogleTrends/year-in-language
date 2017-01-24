@@ -1424,7 +1424,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     margin: 0 auto;
 }
 
-.top-section-text-title-large {font-family: 'Roboto Mono';font-size: 102px;text-transform: uppercase;font-weight: 100;line-height: 103px;color: #494949;margin-left: -6px;}
+.top-section-text-title-large {font-family: 'Roboto Mono';font-size: 92px;text-transform: uppercase;font-weight: 100;line-height: 103px;color: #494949;margin-left: -6px;}
 
 .top-section-text-title-large-year {
     color: #f03b20;
@@ -1975,12 +1975,13 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     width: 100%;
     margin: 0px;
   }
-  .top-section-text-title-large{text-align: center;font-size: 100px;line-height: 130px;margin: 0 auto;}
+  .top-section-text-title-large{text-align: center;font-size: 66px;line-height: 75px;margin: 0 auto;}
   .top-section-text-title-sub-two{
     text-align: center;
     width: 95%;
     margin: 0 auto;
     margin-bottom: 40px;
+    margin-top: 20px;
   }
   .top-section{
     height: auto;
@@ -2416,7 +2417,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 }
 @media (max-width: 350px) {
   .top-list-new-year-column-sub{
-    font-size: 14px;
+    font-size: 13px;
   }
   .top-section-text-title-sub-two{
     font-size: 15px;
@@ -2428,12 +2429,12 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   }
   .top-section-text-title-sub{
     font-size: 21px;
-    margin-bottom: 20px;
+    margin-bottom: 1px;
     font-weight: 300;
   }
   .top-section-text-title-large{
-    font-size: 83px;
-    line-height: 82px;
+    font-size: 59px;
+    line-height: 61px;
   }
   .top-list-new-row-definition{
     padding-left: 7px;

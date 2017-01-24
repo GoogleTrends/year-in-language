@@ -650,7 +650,7 @@ function ready(error
       })
       .append("a")
       .attr("href",function(d){
-        return "https://www.google.com/search?q=what%20is%20the%%20definition%20of%20"+d.term.replace(/\./g,'%20');
+        return "https://www.google.com/search?q=what%20is%20the%20definition%20of%20"+d.term.replace(/\./g,'%20');
       })
       .attr("target","_blank")
       .append("div")
