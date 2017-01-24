@@ -258,7 +258,7 @@ function ready(error
     openingLineChart.append("p")
       .attr("class","opening-line-chart-title")
       .style("width",widthSmallLine+"px")
-      .html("Search Interest 2015 - 2016<br><span class='opening-line-chart-title-span'>Moving 3-month Average for Rising Slang</span>")
+      .html("Search Interest 2015 - 2016<br><span class='opening-line-chart-title-span'>Moving 3-month Average for Rising Words</span>")
       ;
 
     var topListSvg = openingLineChart
@@ -493,16 +493,16 @@ function ready(error
       ;
 
     var titles = {
-      first:{main:"top rising slang in 2016",sub:"Slang, ranked by Search interest&#185; growth, 2016"},
-      second:{topMain:-18,topSub:4,main:"2016 slang in context",sub:"Search interest&#185; for historically popular slang vs. 2016"},
-      third:{topMain:-60,topSub:-35,main:"2016 slang vs. Peak &ldquo;Selfie&rdquo;",sub:"Maximum Search interest&#185; for historically popular slang"},
-      fourth:{main:"The Rise And Fall Of 60 Slang Words",sub:"Search interest&#185; of slang terms, 2013 - 2016"}
+      first:{main:"top rising words in 2016",sub:"Words, ranked by Search interest&#185; growth, 2016"},
+      second:{topMain:-18,topSub:4,main:"2016 words in context",sub:"Search interest&#185; for historically popular words vs. 2016"},
+      third:{topMain:-60,topSub:-35,main:"2016 words vs. Peak &ldquo;Selfie&rdquo;",sub:"Maximum Search interest&#185; for historically popular words"},
+      fourth:{main:"The Rise And Fall Of 50+ Words",sub:"Search interest&#185; of words terms, 2013 - 2016"}
     }
 
     if(mobile){
-      titles.second.sub = "Search interest&#185; for established slang vs. 2016"
-      titles.third.sub = "Max. Search interest&#185; for established slang"
-      titles.fourth.sub = "Search interest&#185; for slang, 2013 - 2016"
+      titles.second.sub = "Search interest&#185; for established words vs. 2016"
+      titles.third.sub = "Max. Search interest&#185; for established words"
+      titles.fourth.sub = "Search interest&#185; for words, 2013 - 2016"
     }
 
     var leftColTitle = topListContainer
@@ -536,7 +536,7 @@ function ready(error
 
     topListBackgroundYear.append("p")
       .attr("class","top-list-new-year-container-year-sub")
-      .text("Slang of the Year")
+      .text("Words of the Year")
       .style("color",function(d){
         return highlightColor;
       })
@@ -671,7 +671,7 @@ function ready(error
       })
       .append("a")
       .attr("href",function(d){
-        return "https://www.google.com/search?q=what%20is%20the%20slang%20definition%20of%20"+d.term.replace(/\./g,'%20');
+        return "https://www.google.com/search?q=what%20is%20the%20definition%20of%20"+d.term.replace(/\./g,'%20');
       })
       .attr("target","_blank")
       .append("div")
@@ -707,7 +707,7 @@ function ready(error
           return "what is the definition of <span class='definition-highlight'>"+d.term.replace(/\./g,' ')+"</span>";
         }
         if(d.topTen){
-          return "what is the slang definition of <span class='definition-highlight'>"+d.term.replace(/\./g,' ')+"</span>";
+          return "what is the definition of <span class='definition-highlight'>"+d.term.replace(/\./g,' ')+"</span>";
         }
         return null;
       })
@@ -1638,7 +1638,7 @@ function ready(error
     topListLineWideContainerCloud
       .append("p")
       .attr("class","horz-word-selector-label")
-      .text("Filter Slang")
+      .text("Filter Words")
       ;
 
     // buildHorzCloudInside(topListDataMap);
@@ -4284,6 +4284,6 @@ function ready(error
   geoHeatMap();
 
   d3.select("body").style("height",null).style("overflow",null);
-  d3.select(".top-section-text-title-sub-two").html("From &ldquo;selfie&rdquo; to &ldquo;woke,&rdquo; Google searches reveal how we adopt new slang.")
+  d3.select(".top-section-text-title-sub-two").html("From &ldquo;selfie&rdquo; to &ldquo;woke,&rdquo; Google searches reveal how we adopt new words.")
 //ready function
 };
