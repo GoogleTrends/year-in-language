@@ -7,9 +7,10 @@ p{
 .container {
     width: 100%;
     margin: 0 auto;
+    /* background: linear-gradient(to bottom, rgba(237,237,237,0) 0%, rgba(246,246,246,0.53) 200px, rgb(255, 255, 255) 500px); */
+    z-index: 100000;
     position: relative;
-    /* height: 900px; */
-    /* overflow: hidden; */
+    margin-bottom: 60px;
 }
 
 .divider{
@@ -260,7 +261,7 @@ body {
 
 .horz-word-cloud-text {
     font-family: 'Roboto';
-    font-weight: 400;
+    font-weight: 100;
     line-height: 18px;
     /* margin-right: 15px; */
     text-transform: capitalize;
@@ -272,7 +273,7 @@ body {
 .number {
     color: #e4251c;
     text-decoration: none;
-    color: #5d636d;
+    color: #9099a9;
     /* font-family: 'Roboto Mono'; */
 }
 
@@ -418,13 +419,13 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 .geo-heat-map-row-text {
     margin: 0px;
     font-family: 'Roboto Mono';
-    font-size: 9px;
+    font-size: 11px;
     line-height: 0px;
     position: relative;
     text-align: right;
     position: absolute;
     left: -18px;
-    font-weight: 400;
+    font-weight: 500;
     opacity: .9;
 }
 
@@ -502,7 +503,6 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     font-family: 'Roboto';
     top: 1px;
     pointer-events: none;
-    display: none;
 }
 
 .top-list-new-item {
@@ -522,20 +522,17 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-    position: absolute;
-    left: 0px;
-    margin-top: 80px;
-    height: 100%;
+    position: relative;
+    width: 50%;
 }
 
 .top-list-new {
-    /* left: inherit; */
-    /* background-size: contain; */
-    /* height: inherit; */
+    left: inherit;
+    background-size: contain;
+    height: inherit;
     /* position: fixed; */
-    /* z-index: 1000000; */
-    position: relative;
-    left: 0px;
+    z-index: 1000000;
+    margin-top: 150px;
 }
 
 .top-list-new-row-definition {
@@ -666,13 +663,10 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    width: 100%;
+    width: 1050px;
     -webkit-justify-content: center;
     justify-content: center;
     margin: 0 auto;
-    left: 0px;
-    position: relative;
-    height: 100%;
 }
 
 .top-list-new-year-column-title {
@@ -695,7 +689,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     letter-spacing: normal;
     width: 540px;
     /* text-decoration: underline; */
-    /* left: 149px; */
+    left: 149px;
     text-align: left;
     /* color: #f03b20; */
     font-weight: 500;
@@ -856,7 +850,6 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     z-index: 100;
     visibility: hidden;
     pointer-events: none;
-    display: none;
 }
 
 .top-list-new-wide-screen-left {
@@ -865,7 +858,6 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     top: 0px;
     background: white;
     width: 583px;
-    display: none;
 }
 
 
@@ -898,10 +890,9 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 .top-list-new-wide-svg-axis-text {
     text-anchor: middle;
     font-family: 'Roboto Mono';
-    font-size: 11px;
+    font-size: 9px;
     fill: #8e97a7;
     fill: black;
-    font-weight: 600;
 }
 
 .top-list-new-wide-svg-line-container {
@@ -999,12 +990,12 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 }
 
 .year-right-col {
-    font-size: 12px;
+    font-size: 9px;
     font-weight: 900;
     color: rgb(66, 132, 243);
     margin-right: 5px;
     color: #000000;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .cloud-term {
@@ -1021,7 +1012,6 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   line-height: 17px;
   visibility: hidden;
   pointer-events: none;
-  display: none;
 }
 
 
@@ -1032,7 +1022,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     border-left: 1px solid #ecf0f1;
     padding-left: 7px;
     z-index: 1000000000;
-    margin-top: 34px;
+    display: none;
 }
 
 .prose-middle {
@@ -1086,7 +1076,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     left: -101px;
     top: 31px;
     transform: rotate(270deg);
-    font-size: 9px;
+    font-size: 11px;
     text-transform: uppercase;
     width: 100px;
     text-align: center;
@@ -1094,7 +1084,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     font-weight: 500;
     opacity: 1;
     font-family: 'Roboto';
-    color: #a5afbf;
+    color: #7a7e86;
 }
 
 .geo-heat-map-title {font-family: 'Roboto';text-align: center;color: rgb(135, 143, 156);text-transform: capitalize;font-size: 18px;font-weight: 400;background: white;color: black;font-weight: 600;letter-spacing: normal;margin-right: 20px;margin-top: 7px;text-align: right;line-height: 30px;}
@@ -1114,17 +1104,18 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 
 .geo-heat-map-row-axis {
     position: absolute;
-    font-size: 8px;
+    font-size: 10px;
     top: -12px;
     left: -1px;
     border-left: 1px solid rgba(0, 0, 0, 0.28);
     padding-left: -1px;
     /* font-family: 'Roboto Mono'; */
-    font-weight: 400;
+    font-weight: 600;
     line-height: 12px;
     color: rgb(35,35,35);
     padding-left: 4px;
     width: 100px;
+    text-transform: uppercase;
 }
 
 .geo-heat-map-row-box-container:hover {
@@ -1143,7 +1134,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     margin-bottom: 20px;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    width: 480px;
+    width: 490px;
     /* margin: 0 auto; */
     position: relative;
 }
@@ -1159,7 +1150,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     /* margin-left: -1px; */
     font-size: 12px;
     text-transform: capitalize;
-    line-height: 17px;
+    line-height: 18px;
     /* padding-left: 3px; */
     /* padding-right: 6px; */
 }
@@ -1185,12 +1176,12 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 }
 
 .dma-text-label {
-    font-size: 9px;
+    font-size: 11px;
     font-family: 'Roboto';
     text-anchor: start;
     /* text-transform: uppercase; */
     font-weight: 400;
-    fill: #a5afbf;
+    fill: #626973;
     letter-spacing: -px;
 }
 
@@ -1212,10 +1203,13 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     margin-bottom: 10px;
 }
 
-.geo-heat-map-filter-label {font-family: 'Roboto Mono';font-size: 9px;font-weight: 500;position: absolute;top: -15px;color: #8e97a7;text-transform: uppercase;letter-spacing: 1px;left: 3px; right: 0px;}
+.geo-heat-map-filter-label {font-family: 'Roboto Mono';font-size: 11px;font-weight: 500;position: absolute;top: -18px;color: #8e97a7;text-transform: uppercase;letter-spacing: 1px;left: 3px;right: 0px;}
 
 .geo-heat-map-filter-text{
   padding:0px 3px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
 }
 .geo-heat-map-filter-dot{
   opacity: .8;
@@ -1331,11 +1325,11 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     left: -95px;
     text-align: right;
     width: 90px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 6px;
     font-family: 'Roboto Mono';
     color: black;
-    font-weight: 400;
+    font-weight: 500;
     text-transform: uppercase;
     pointer-events: none;
     opacity: 0;
@@ -1694,10 +1688,9 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     font-size: 11px;
     color: black;
     font-weight: 400;
-    opacity: 1;
+    opacity: .4;
     line-height: 14px;
     margin-bottom: 7px;
-    width: 100%;
 }
 
 
@@ -1742,10 +1735,10 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 }
 
 .geo-heat-map-chart-source {
-    font-size: 11px;
+    font-size: 12px;
     color: black;
     font-weight: 400;
-    opacity: .4;
+    opacity: .6;
     line-height: 13px;
     margin-bottom: 6px;
 }
@@ -1798,7 +1791,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
 
 
 .geo-heat-map-legend-text {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 400;
     font-family: 'Roboto';
     /* text-transform: uppercase; */
@@ -1871,7 +1864,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   padding-bottom: 10px;
 }
 
-.horz-word-selector-label{position: absolute;font-family: 'Roboto Mono';font-size: 10px;font-weight: 500;position: absolute;top: -22px;color: #8e97a7;text-transform: uppercase;letter-spacing: 1px;padding-left: 7px;/* right: 0px; */margin: 0 auto;text-align: left;pointer-events: none;left: 0px;text-align: left;}
+.horz-word-selector-label{position: absolute;font-family: 'Roboto Mono';font-size: 10px;font-weight: 500;position: absolute;top: -16px;color: #8e97a7;text-transform: uppercase;letter-spacing: 1px;padding-left: 7px;/* right: 0px; */margin: 0 auto;text-align: left;pointer-events: none;left: 0px;}
 .top-list-new-wide-screen-word-top{
     bottom: 1px;
     width: 120px;
@@ -1927,24 +1920,10 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   margin-top: 8px;
   margin-left: 4px;
 }
-.top-list-new-wide-svg-container{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
 
-
-@media (max-width: 450px) {
-  body{
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  .top-list-new-wide-svg-source-text{
-
-  }
+@media (max-width: 900px) {
   .top-list-new-wide-svg-source-embed{
-    /* display: none; */
+    display: none;
   }
   .top-section-text-title{
     padding-left: 0px;
@@ -1953,6 +1932,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     padding-left: 0px;
   }
   .top-list-new{
+    margin-top:70px;
   }
   .geo-heat-map-region{
     max-width: 400px;
@@ -2016,7 +1996,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   .top-word-cloud-container{position: absolute;top: 0px;left: 0px;width: 100%;display: -webkit-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: center;justify-content: center;margin-top: 10px;pointer-events: none;}
   .container{
   overflow: hidden;
-  height: 690px;
+  /* padding-bottom: 150px; */
   }
   .footer{
     margin: 0px;
@@ -2058,9 +2038,15 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     width: 100%;
     pointer-events: none;
   }
-  .top-list-new-container{width: 100%;}
+  .top-list-new-container{width: 100%;position: absolute;left: 0px;top: 0px;}
   .top-list-new{
+  /* display: none; */
+  position: absolute;
   width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   }
   .title-block{
     padding:0px;
@@ -2174,6 +2160,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   }
   .top-list-new-wide-screen-left{width: 100%;}
   .top-list-new-wide-screen-top{
+    width: 100%;
   }
   .top-list-new-year-container-year{
   right: 27px;
@@ -2206,11 +2193,8 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   .top-list-new-wide-svg-source{
     width: 95%;
     margin: 0 auto;
+    margin-left: 5%;
     pointer-events: none;
-    left: 0px;
-    right: 0px;
-    top: 580px;
-    display: none;
   }
   .top-list-new-wide-svg-container{width: 100%;}
   .top-list-new-wide-screen-word{
@@ -2222,14 +2206,16 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     background: white;
   }
   .horz-word-selector{
-  top: 353px;
-  width: 95%;
-  padding-left: 0px;
-  border-left: 0px;
-  margin: 0 auto;
-  margin-top: 34px;
-  left: 0px;
-  right: 0px;
+    width: 95%;
+    padding: 0px;
+    margin: 0 auto;
+    left: 0px;
+    right: 0px;
+    border-left: none;
+    /* top: 410px; */
+    position: relative;
+    margin-bottom: 40px;
+    display: block;
   }
   .year-right-col{
 
@@ -2358,6 +2344,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     user-select: none; /* Non-prefixed version, currently */
   }
   .top-list-new-wide-svg{
+    -webkit-transform: translate3d(0, 0, 0);-moz-transform: translate3d(0, 0, 0);-ms-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);
   }
   .top-list-number-new{
   }
@@ -2401,8 +2388,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
     margin-bottom: 6px;
-    /* padding-bottom: 3px; */
-    padding: 0px;
+    padding-bottom: 3px;
   }
   .horz-word-cloud-text{
     line-height: 15px;
@@ -2416,10 +2402,6 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
   }
 }
 @media (max-width: 350px) {
-  .top-list-new-wide-svg-source-text{
-    font-size: 10px;
-    line-height: 13px;
-  }
   .top-list-new-year-column-sub{
     font-size: 14px;
   }
@@ -2470,7 +2452,7 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     margin-bottom: 16px;
   }
   .horz-word-cloud-text{
-    line-height: 13px;
+    line-height: 11px;
   }
   /*.vertical-center{
     position: absolute;
