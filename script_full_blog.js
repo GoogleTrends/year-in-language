@@ -397,30 +397,30 @@ function ready(error
       .append("path")
       .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null; })
       .attr("class","top-list-new-svg-voronoi-paths")
-      .on("mouseover",function(d){
-        var term = d.data.term;
-
-        // smallLinePaths.style("opacity",function(d){
-        //   if(d.term == term){
-        //     return 1;
-        //   }
-        //   return .1;
-        // })
-
-        smallLineText.classed("text-scroll",function(d){
-          if(d.term == term){
-            return true;
-          }
-          return false;
-        });
-
-        smallLineText.classed("text-scroll",function(d){
-          if(d.term == term){
-            return true;
-          }
-          return false;
-        });
-      })
+      // .on("mouseover",function(d){
+      //   var term = d.data.term;
+      //
+      //   // smallLinePaths.style("opacity",function(d){
+      //   //   if(d.term == term){
+      //   //     return 1;
+      //   //   }
+      //   //   return .1;
+      //   // })
+      //
+      //   smallLineText.classed("text-scroll",function(d){
+      //     if(d.term == term){
+      //       return true;
+      //     }
+      //     return false;
+      //   });
+      //
+      //   smallLineText.classed("text-scroll",function(d){
+      //     if(d.term == term){
+      //       return true;
+      //     }
+      //     return false;
+      //   });
+      // })
       ;
 
     var smallLinePaths = topListSvg
@@ -551,39 +551,39 @@ function ready(error
         }
         return null;
       })
-      .on("mouseover",function(d){
-        var term = d.term;
-        topListSvg.classed("path-mouseover",true);
-        topListSvg.classed("path-scroll",false);
-
-
-        topListItem.classed("row-highlight",function(d,i){
-          if(d.term==term && !compareLive && !firstChartLive){
-            return true;
-          }
-          return false;
-        })
-        ;
-
-        smallLinePaths.classed("path-highlight",function(d){
-          if(d.term == term){
-            return true;
-          }
-          return false;
-        });
-
-        smallLineText.classed("text-highlight",function(d){
-          if(d.term == term){
-            return true;
-          }
-          return false;
-        });
-      })
-      .on("mouseout",function(d){
-        topListSvg.classed("path-mouseover",false);
-        topListSvg.classed("path-scroll",true);
-
-      })
+      // .on("mouseover",function(d){
+      //   var term = d.term;
+      //   topListSvg.classed("path-mouseover",true);
+      //   topListSvg.classed("path-scroll",false);
+      //
+      //
+      //   topListItem.classed("row-highlight",function(d,i){
+      //     if(d.term==term && !compareLive && !firstChartLive){
+      //       return true;
+      //     }
+      //     return false;
+      //   })
+      //   ;
+      //
+      //   smallLinePaths.classed("path-highlight",function(d){
+      //     if(d.term == term){
+      //       return true;
+      //     }
+      //     return false;
+      //   });
+      //
+      //   smallLineText.classed("text-highlight",function(d){
+      //     if(d.term == term){
+      //       return true;
+      //     }
+      //     return false;
+      //   });
+      // })
+      // .on("mouseout",function(d){
+      //   topListSvg.classed("path-mouseover",false);
+      //   topListSvg.classed("path-scroll",true);
+      //
+      // })
       ;
 
     var topListItemTerm = topListItem.append("p")
@@ -631,10 +631,10 @@ function ready(error
       .filter(function(d){
         return d.topTen == true;
       })
-      .on("mouseover",function(d){
-        d3.select(this.parentNode).select(".top-list-new-row-word").style("opacity",1).style("color",highlightColor).style("font-weight",600);
-        topListBackgroundYear.style("visibility","hidden")
-      })
+      // .on("mouseover",function(d){
+      //   d3.select(this.parentNode).select(".top-list-new-row-word").style("opacity",1).style("color",highlightColor).style("font-weight",600);
+      //   topListBackgroundYear.style("visibility","hidden")
+      // })
       .on("mouseout",function(d){
         d3.select(this.parentNode).select(".top-list-new-row-word")
           .style("opacity",function(){
@@ -677,17 +677,17 @@ function ready(error
         }
         return null;
       })
-      .on("mouseover",function(d){
-        if(!compareLive){
-          var term = d.term;
-          topListItemDefinition.style("opacity",function(d,i){
-            if(d.term == term){
-              return 1;
-            }
-            return null;
-          })
-        }
-      })
+      // .on("mouseover",function(d){
+      //   if(!compareLive){
+      //     var term = d.term;
+      //     topListItemDefinition.style("opacity",function(d,i){
+      //       if(d.term == term){
+      //         return 1;
+      //       }
+      //       return null;
+      //     })
+      //   }
+      // })
 
     topListItemDefinition.append("p")
       .attr("class","top-list-new-row-definition-text")
@@ -1056,81 +1056,81 @@ function ready(error
       .append("path")
       .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null; })
       .attr("class","top-list-new-wide-svg-voronoi-paths")
-      .on("mouseover",function(d){
-        var term = d.data.term;
-
-        topListBackgroundYear.style("visibility","hidden")
-
-        var item = topListItem.filter(function(d){
-          return term == d.term
-        })
-        ;
-        item.select(".top-list-new-row-line").style("background-color",function(d){
-          return textColors[d.term];
-        });
-        item.select(".top-list-new-row-word").style("color",function(d){
-          return textColors[d.term];
-        }).style("opacity",1).style("font-weight",600);
-
-        wideLinePaths
-          .filter(function(d){
-            return term == d.term
-          })
-          .style("stroke",function(d,i){
-            return textColors[d.term];
-          })
-          .style("stroke-opacity",function(d){
-            return 1;
-          })
-          ;
-      })
-      .on("mouseout",function(d){
-
-        var term = d.data.term;
-
-        if(scatterVisible){
-          topListBackgroundYear.style("visibility","visible")
-        }
-
-        var item = topListItem.filter(function(d){
-          return term == d.term
-        })
-        ;
-
-        item.select(".top-list-new-row-line").style("background-color",highlightColor);
-
-        item.select(".top-list-new-row-word")
-          .style("color",function(d,i){
-            if(mouseoverEffect){
-              return "rgb(142, 151, 167)"
-            }
-            return textColors[d.term];
-          })
-          .style("opacity",function(){
-            if(mouseoverEffect){
-              if(mobile){
-                return 0;
-              }
-              return .2;
-            }
-            return null;
-          })
-          .style("font-weight",null)
-          ;
-
-        wideLinePaths
-          .filter(function(d){
-            return term == d.term
-          })
-          .style("stroke",function(d){
-            return highlightColor;
-          })
-          .style("stroke-opacity",function(d){
-            return .5;
-          })
-          ;
-
-      })
+      // .on("mouseover",function(d){
+      //   var term = d.data.term;
+      //
+      //   topListBackgroundYear.style("visibility","hidden")
+      //
+      //   var item = topListItem.filter(function(d){
+      //     return term == d.term
+      //   })
+      //   ;
+      //   item.select(".top-list-new-row-line").style("background-color",function(d){
+      //     return textColors[d.term];
+      //   });
+      //   item.select(".top-list-new-row-word").style("color",function(d){
+      //     return textColors[d.term];
+      //   }).style("opacity",1).style("font-weight",600);
+      //
+      //   wideLinePaths
+      //     .filter(function(d){
+      //       return term == d.term
+      //     })
+      //     .style("stroke",function(d,i){
+      //       return textColors[d.term];
+      //     })
+      //     .style("stroke-opacity",function(d){
+      //       return 1;
+      //     })
+      //     ;
+      // })
+      // .on("mouseout",function(d){
+      //
+      //   var term = d.data.term;
+      //
+      //   if(scatterVisible){
+      //     topListBackgroundYear.style("visibility","visible")
+      //   }
+      //
+      //   var item = topListItem.filter(function(d){
+      //     return term == d.term
+      //   })
+      //   ;
+      //
+      //   item.select(".top-list-new-row-line").style("background-color",highlightColor);
+      //
+      //   item.select(".top-list-new-row-word")
+      //     .style("color",function(d,i){
+      //       if(mouseoverEffect){
+      //         return "rgb(142, 151, 167)"
+      //       }
+      //       return textColors[d.term];
+      //     })
+      //     .style("opacity",function(){
+      //       if(mouseoverEffect){
+      //         if(mobile){
+      //           return 0;
+      //         }
+      //         return .2;
+      //       }
+      //       return null;
+      //     })
+      //     .style("font-weight",null)
+      //     ;
+      //
+      //   wideLinePaths
+      //     .filter(function(d){
+      //       return term == d.term
+      //     })
+      //     .style("stroke",function(d){
+      //       return highlightColor;
+      //     })
+      //     .style("stroke-opacity",function(d){
+      //       return .5;
+      //     })
+      //     ;
+      //
+      // })
       ;
 
     var wideLinePathsVoronoiTwo = wideLinePathsVoronoiContainerTwo
@@ -1151,79 +1151,79 @@ function ready(error
       .append("path")
       .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null; })
       .attr("class","top-list-new-wide-svg-voronoi-paths-two")
-      .on("mouseover",function(d){
-        var term = d.data.term;
-
-        topListBackgroundYear.style("visibility","hidden")
-
-        var item = topListItem.filter(function(d){
-          return term == d.term
-        })
-        ;
-        item.select(".top-list-new-row-line").style("background-color",function(d){
-          return textColors[d.term];
-        });
-        item.select(".top-list-new-row-word").style("color",function(d){
-          return textColors[d.term];
-        }).style("opacity",1).style("font-weight",600);
-
-        wideLinePaths
-          .filter(function(d){
-            return term == d.term
-          })
-          .style("stroke",function(d){
-            return textColors[d.term];
-          })
-          .style("stroke-opacity",function(d){
-            return 1;
-          })
-          ;
-      })
-      .on("mouseout",function(d){
-
-        var term = d.data.term;
-
-        if(scatterVisible){
-          topListBackgroundYear.style("visibility","visible")
-        }
-
-        var item = topListItem.filter(function(d){
-          return term == d.term
-        })
-        ;
-
-        item.select(".top-list-new-row-line").style("background-color",highlightColor);
-        item.select(".top-list-new-row-word")
-          .style("color",function(d,i){
-            if(mouseoverEffect){
-              return "rgb(142, 151, 167)"
-            }
-            return textColors[d.term];
-          })
-          .style("opacity",function(){
-            if(mouseoverEffect){
-              if(mobile){
-                return 0;
-              }
-              return .2;
-            }
-            return null;
-          })
-          .style("font-weight",null);
-
-        wideLinePaths
-          .filter(function(d){
-            return term == d.term
-          })
-          .style("stroke",function(d){
-            return highlightColor;
-          })
-          .style("stroke-opacity",function(d){
-            return .5;
-          })
-          ;
-
-      })
+      // .on("mouseover",function(d){
+      //   var term = d.data.term;
+      //
+      //   topListBackgroundYear.style("visibility","hidden")
+      //
+      //   var item = topListItem.filter(function(d){
+      //     return term == d.term
+      //   })
+      //   ;
+      //   item.select(".top-list-new-row-line").style("background-color",function(d){
+      //     return textColors[d.term];
+      //   });
+      //   item.select(".top-list-new-row-word").style("color",function(d){
+      //     return textColors[d.term];
+      //   }).style("opacity",1).style("font-weight",600);
+      //
+      //   wideLinePaths
+      //     .filter(function(d){
+      //       return term == d.term
+      //     })
+      //     .style("stroke",function(d){
+      //       return textColors[d.term];
+      //     })
+      //     .style("stroke-opacity",function(d){
+      //       return 1;
+      //     })
+      //     ;
+      // })
+      // .on("mouseout",function(d){
+      //
+      //   var term = d.data.term;
+      //
+      //   if(scatterVisible){
+      //     topListBackgroundYear.style("visibility","visible")
+      //   }
+      //
+      //   var item = topListItem.filter(function(d){
+      //     return term == d.term
+      //   })
+      //   ;
+      //
+      //   item.select(".top-list-new-row-line").style("background-color",highlightColor);
+      //   item.select(".top-list-new-row-word")
+      //     .style("color",function(d,i){
+      //       if(mouseoverEffect){
+      //         return "rgb(142, 151, 167)"
+      //       }
+      //       return textColors[d.term];
+      //     })
+      //     .style("opacity",function(){
+      //       if(mouseoverEffect){
+      //         if(mobile){
+      //           return 0;
+      //         }
+      //         return .2;
+      //       }
+      //       return null;
+      //     })
+      //     .style("font-weight",null);
+      //
+      //   wideLinePaths
+      //     .filter(function(d){
+      //       return term == d.term
+      //     })
+      //     .style("stroke",function(d){
+      //       return highlightColor;
+      //     })
+      //     .style("stroke-opacity",function(d){
+      //       return .5;
+      //     })
+      //     ;
+      //
+      // })
       ;
 
     var wideLinePaths = topListLineWideLineContainer
@@ -1259,7 +1259,7 @@ function ready(error
         var totalLength = d3.select(this).node().getTotalLength();
         return 0 + " " + totalLength;
       })
-      .on("mouseover",function(d){
+      // .on("mouseover",function(d){
       })
       ;
 
@@ -3382,172 +3382,172 @@ function ready(error
         }
         return "<span class='number' style='font-size:9px;'>"+(i%10+1)+". </span><span class='cloud-term'>"+d.term.replace("."," ")+"</span>";
       })
-      .on("mouseover",function(d){
-
-        toolTip.style("visibility",null);
-        var term = d.term;
-        var barChartData = d.rollingAverage;
-
-        var maxRollingAverage = d3.max(barChartData,function(d){ return d; });
-
-        var comparisons = [0,300,400,500];
-        toolTipLineChart.select("svg").remove();
-        toolTipBarChart.select("div").remove();
-
-
-        var margin = {top:10, right:10, bottom:20, left:10};
-        var width = 130 - margin.left - margin.right,
-          height = 130 - margin.top - margin.bottom
-          ;
-
-        var maxValues = [];
-
-        var newData = d.weekArray;
-        var max = d3.max(newData,function(d){ return d.volume;})
-
-        var x = d3.scaleLinear().domain([0,weeks.length-1]).range([0,width]);
-        var y = d3.scaleLinear().domain([0,max]).range([height,0]);
-        var colorScale = d3.scaleLinear().domain([0,max]).range(["#aaa","red"]);
-        var barHeight = d3.scaleLinear().domain([0,200]).range([0,115]);
-        var line = d3.line()
-          .x(function(d,i) {
-            return x(i);
-          })
-          .y(function(d,i) {
-            return y(d.volume);
-          })
-          .curve(d3.curveBasis)
-          ;
-
-        var svg = toolTipLineChart.append("svg")
-          .attr("width",width+margin.left+margin.right)
-          .attr("height",height+margin.top+margin.bottom)
-          ;
-
-        var lineChartG = svg
-          .selectAll("g")
-          .data([newData])
-          .enter()
-          .append("g")
-
-        lineChartG
-          .append("g")
-          .attr("transform","translate("+margin.left+","+margin.top+")")
-          .append("path")
-          .attr("class","horz-word-cloud-tool-tip-line-chart-line")
-          .attr("d",function(d,i){
-            return line(d);
-          })
-          .transition()
-          .duration(400)
-          .attrTween("stroke-dasharray", tweenDash);
-
-          function tweenDash() {
-            var l = this.getTotalLength(),
-                i = d3.interpolateString("0," + l, l + "," + l);
-            return function(t) { return i(t); };
-          }
-
-        lineChartG.append("g")
-          .attr("transform","translate("+margin.left+","+margin.top+")")
-          .append("text")
-          .attr("class","horz-word-cloud-tool-tip-line-chart-term")
-          .attr("x",width/2)
-          .text(term.replace(".",""))
-          ;
-
-        var map = {0:2015,54:2016};
-
-        lineChartG.append("g")
-          .attr("transform","translate("+margin.left+","+ (margin.top+height+5) +")")
-          .append("line")
-          .attr("class","horz-word-cloud-tool-tip-line-chart-bottom-axis")
-          .attr("x1",0)
-          .attr("x2",width)
-          .attr("y0",0)
-          .attr("y1",0)
-          .text(function(d,i){
-            return map[d];
-          })
-          ;
-
-        lineChartG.append("g")
-          .attr("transform","translate("+margin.left+","+ (margin.top+height+margin.bottom) +")")
-          .selectAll("text")
-          .data([0,54])
-          .enter()
-          .append("text")
-          .attr("class","horz-word-cloud-tool-tip-line-chart-axis")
-          .attr("x",function(d){
-            return x(d);
-          })
-          .text(function(d,i){
-            return map[d];
-          })
-          ;
-
-        var toolTipBarChartBar = toolTipBarChart.append("div")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-wrapper")
-          ;
-
-        var barMax = 0;
-
-        for (var item in comparisons){
-          if(comparisons[item] < maxRollingAverage){
-            barMax = item;
-          }
-        }
-        barMax = +barMax+1;
-        var newMax = comparisons[barMax];
-        barHeight.domain([0,newMax+50]);
-
-        toolTipBarChartBar
-          .append("div")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-bar")
-          .style("width","20px")
-          .style("height","0px")
-          .transition()
-          .duration(400)
-          .delay(100)
-          .style("height",function(d){
-            return barHeight(maxRollingAverage) + "px";
-          })
-          ;
-
-        toolTipBarChartBar
-          .append("p")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-term")
-          .text(term.replace(".",""))
-          ;
-
-        toolTipBarChartBar
-          .append("div")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-axis")
-          ;
-
-        toolTipBarChartBar
-          .append("div")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-comparison-line")
-          .style("bottom",function(d){
-            return barHeight(newMax)+"px";
-          })
-          ;
-
-        toolTipBarChartBar
-          .append("div")
-          .attr("class","horz-word-cloud-tool-tip-bar-chart-comparison-annotation")
-          .style("bottom",function(d){
-            return (barHeight(newMax)-12)+"px";
-          })
-          .style("right","-4px")
-          .text("← FOMO ('14) would be here")
-          ;
-
-
-
-        //toolTipBarChart
-        //toolTipLineChart
-      })
+      // .on("mouseover",function(d){
+      //
+      //   toolTip.style("visibility",null);
+      //   var term = d.term;
+      //   var barChartData = d.rollingAverage;
+      //
+      //   var maxRollingAverage = d3.max(barChartData,function(d){ return d; });
+      //
+      //   var comparisons = [0,300,400,500];
+      //   toolTipLineChart.select("svg").remove();
+      //   toolTipBarChart.select("div").remove();
+      //
+      //
+      //   var margin = {top:10, right:10, bottom:20, left:10};
+      //   var width = 130 - margin.left - margin.right,
+      //     height = 130 - margin.top - margin.bottom
+      //     ;
+      //
+      //   var maxValues = [];
+      //
+      //   var newData = d.weekArray;
+      //   var max = d3.max(newData,function(d){ return d.volume;})
+      //
+      //   var x = d3.scaleLinear().domain([0,weeks.length-1]).range([0,width]);
+      //   var y = d3.scaleLinear().domain([0,max]).range([height,0]);
+      //   var colorScale = d3.scaleLinear().domain([0,max]).range(["#aaa","red"]);
+      //   var barHeight = d3.scaleLinear().domain([0,200]).range([0,115]);
+      //   var line = d3.line()
+      //     .x(function(d,i) {
+      //       return x(i);
+      //     })
+      //     .y(function(d,i) {
+      //       return y(d.volume);
+      //     })
+      //     .curve(d3.curveBasis)
+      //     ;
+      //
+      //   var svg = toolTipLineChart.append("svg")
+      //     .attr("width",width+margin.left+margin.right)
+      //     .attr("height",height+margin.top+margin.bottom)
+      //     ;
+      //
+      //   var lineChartG = svg
+      //     .selectAll("g")
+      //     .data([newData])
+      //     .enter()
+      //     .append("g")
+      //
+      //   lineChartG
+      //     .append("g")
+      //     .attr("transform","translate("+margin.left+","+margin.top+")")
+      //     .append("path")
+      //     .attr("class","horz-word-cloud-tool-tip-line-chart-line")
+      //     .attr("d",function(d,i){
+      //       return line(d);
+      //     })
+      //     .transition()
+      //     .duration(400)
+      //     .attrTween("stroke-dasharray", tweenDash);
+      //
+      //     function tweenDash() {
+      //       var l = this.getTotalLength(),
+      //           i = d3.interpolateString("0," + l, l + "," + l);
+      //       return function(t) { return i(t); };
+      //     }
+      //
+      //   lineChartG.append("g")
+      //     .attr("transform","translate("+margin.left+","+margin.top+")")
+      //     .append("text")
+      //     .attr("class","horz-word-cloud-tool-tip-line-chart-term")
+      //     .attr("x",width/2)
+      //     .text(term.replace(".",""))
+      //     ;
+      //
+      //   var map = {0:2015,54:2016};
+      //
+      //   lineChartG.append("g")
+      //     .attr("transform","translate("+margin.left+","+ (margin.top+height+5) +")")
+      //     .append("line")
+      //     .attr("class","horz-word-cloud-tool-tip-line-chart-bottom-axis")
+      //     .attr("x1",0)
+      //     .attr("x2",width)
+      //     .attr("y0",0)
+      //     .attr("y1",0)
+      //     .text(function(d,i){
+      //       return map[d];
+      //     })
+      //     ;
+      //
+      //   lineChartG.append("g")
+      //     .attr("transform","translate("+margin.left+","+ (margin.top+height+margin.bottom) +")")
+      //     .selectAll("text")
+      //     .data([0,54])
+      //     .enter()
+      //     .append("text")
+      //     .attr("class","horz-word-cloud-tool-tip-line-chart-axis")
+      //     .attr("x",function(d){
+      //       return x(d);
+      //     })
+      //     .text(function(d,i){
+      //       return map[d];
+      //     })
+      //     ;
+      //
+      //   var toolTipBarChartBar = toolTipBarChart.append("div")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-wrapper")
+      //     ;
+      //
+      //   var barMax = 0;
+      //
+      //   for (var item in comparisons){
+      //     if(comparisons[item] < maxRollingAverage){
+      //       barMax = item;
+      //     }
+      //   }
+      //   barMax = +barMax+1;
+      //   var newMax = comparisons[barMax];
+      //   barHeight.domain([0,newMax+50]);
+      //
+      //   toolTipBarChartBar
+      //     .append("div")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-bar")
+      //     .style("width","20px")
+      //     .style("height","0px")
+      //     .transition()
+      //     .duration(400)
+      //     .delay(100)
+      //     .style("height",function(d){
+      //       return barHeight(maxRollingAverage) + "px";
+      //     })
+      //     ;
+      //
+      //   toolTipBarChartBar
+      //     .append("p")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-term")
+      //     .text(term.replace(".",""))
+      //     ;
+      //
+      //   toolTipBarChartBar
+      //     .append("div")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-axis")
+      //     ;
+      //
+      //   toolTipBarChartBar
+      //     .append("div")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-comparison-line")
+      //     .style("bottom",function(d){
+      //       return barHeight(newMax)+"px";
+      //     })
+      //     ;
+      //
+      //   toolTipBarChartBar
+      //     .append("div")
+      //     .attr("class","horz-word-cloud-tool-tip-bar-chart-comparison-annotation")
+      //     .style("bottom",function(d){
+      //       return (barHeight(newMax)-12)+"px";
+      //     })
+      //     .style("right","-4px")
+      //     .text("← FOMO ('14) would be here")
+      //     ;
+      //
+      //
+      //
+      //   //toolTipBarChart
+      //   //toolTipLineChart
+      // })
       ;
 
     termsWrapper.each(function(d){
