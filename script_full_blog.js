@@ -1260,7 +1260,7 @@ function ready(error
         return 0 + " " + totalLength;
       })
       // .on("mouseover",function(d){
-      })
+      // })
       ;
 
     var fontScale = d3.scaleLinear().domain([25,0]).range([10,12]);
