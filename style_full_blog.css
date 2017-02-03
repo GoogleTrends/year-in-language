@@ -485,9 +485,13 @@ text.horz-word-cloud-tool-tip-line-chart-axis {}
     z-index: 1000;
     font-weight: 100;
     /* pointer-events: none; */
+    -webkit-transform-origin: top left;
+    -webkit-transform: rotate(-45deg);
     transform-origin: top left;
+    transform: rotate(-45deg);
     /* background: rgba(70, 85, 93, 0.1); */
     pointer-events: none;
+
 }
 
 .top-list-number-new {

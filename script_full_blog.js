@@ -1700,7 +1700,6 @@ function ready(error
         .style("width","100px")
         .style("left",0+"px")
         .style("font-size","12px")
-        .style("transform","rotate(-45deg)")
         .style("color",function(d){
           if(d.year == "2016"){
             return highlightColor;
@@ -2196,7 +2195,6 @@ function ready(error
         })
         .style("left",-6+"px")
         .style("font-size","12px")
-        .style("transform","rotate(-45deg)")
         .style("opacity",function(d){
           if(wordsToCompare.indexOf(d.term) > -1){
             return 1;
