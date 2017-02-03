@@ -3989,7 +3989,7 @@ function ready(error
       .attr("class","geo-heat-map-region")
       ;
 
-      var iframeTwo = "<iframe src='geo_blog.html' frameborder='0'></iframe>";
+      var iframeTwo = "<iframe src='https://googletrends.github.io/year-in-language/geo_blog.html' frameborder='0'></iframe>";
       var inputTwo = '<input class="embed-input" readonly="true" value="'+iframeTwo+'">';
 
       var iFrameTwoDisplayed = false;
