@@ -18,14 +18,35 @@ compareColor = "#37474F";
 var mouseoverEffect = false;
 //var voronoiHighlight = "#f03b20";
 voronoiHighlight = "rgb(44, 160, 44)"
-var wordsToShow = ["selfie","slay","netflix.and.chill","felicia"];
-var wordsToCompareSaved = ["selfie","netflix.and.chill","woke"];
-var wordsToCompare = ["selfie","netflix.and.chill","woke"];
-var rareWordThreshold = 0.02403311764;
+
+var wordsToShow = ["non binary", "woke", "trolls"];
+var wordsToCompareSaved = ["woke","incel"];
+var wordsToCompare = ["woke","incel"];
+
+// var wordsToShow = ["selfie","slay","netflix.and.chill","felicia"];
+// var wordsToCompareSaved = ["selfie","netflix.and.chill","woke"];
+// var wordsToCompare = ["selfie","netflix.and.chill","woke"];
+var rareWordThreshold = 0.01056747892;
+// rareWordThreshold = .02
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 var cycleTimeout;
-var compareWord = {term:"selfie"};
+var compareWord = {term:"woke"};
 var positions = {};
+
+var wordsToKeep = [
+// "wig",
+"incel",
+"uwu",
+"mukbang",
+"ibf",
+"blockchain",
+"rng",
+"jit",
+"juuling",
+"gekyume",
+"zaddy"
+//"jit"
+]
 
 var topListContainer = d3.select(".top-list-new");
 
@@ -84,7 +105,45 @@ var states = [
   ]
   ;
 
-var toRemove = [];
+var toRemove = [
+  "keto",
+  "thots",
+  "tariffs",
+  "homophobic",
+  "catatonic",
+  "pansexual",
+  "cryptocurrency",
+  "come at me",
+  "poc",
+  "stg",
+  "womp",
+  "lul",
+  "basta",
+  "oof",
+  "blicky",
+  "slatt",
+  "colonizer",
+  "vaping",
+  "feckless",
+  "palimony",
+  "gig economy",
+  "pour over",
+  "poggers",
+  "okurr",
+  "flair",
+  "go off",
+  "shat",
+  "skoliosexual",
+  "clout chaser",
+  "hypergamy",
+  "Colorist",
+  "soyboy",
+  "gender binary",
+  "boujee",
+  "leggings"
+];
+
+
 
 var statesMap = d3.map(states,function(d){return d[0]});
 var statesMapName = d3.map(states,function(d){return d[1]});
@@ -103,18 +162,30 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
   }
 }
 
-
 queue()
-  .defer(d3.csv, "summary_3.csv") // 200KB
-  .defer(d3.csv, "state_data_10.csv") // 900KB
+  .defer(d3.csv, "selected_words_formatted_2.csv") // 200KB
+  .defer(d3.csv, "indexed_state_4.csv") // 900KB
   .defer(d3.json, "us_map_state.json") //600KB
+  .defer(d3.csv, "year_words.csv") //600KB
   .await(ready);
 
 function ready(error
   ,summary
   ,state_data
   ,usState
+  ,year_words
 ){
+  var yearMap = d3.map(year_words, function(d){return d.word;});
+
+  for (var term in summary){
+    if(yearMap.has(summary[term]["term"])){
+      summary[term]["year"] = yearMap.get(summary[term]["term"])["year"]
+    }
+  }
+
+  summary = summary.filter(function(d){
+    return +d.year > 2013;
+  })
 
   var wordArray = [];
 
@@ -172,7 +243,7 @@ function ready(error
     var maxValues = [];
 
     var topListDataMap = d3.nest().key(function(d){
-        return d.year;
+        return +d.year;
       })
       .entries(topListData)
       ;
@@ -226,7 +297,7 @@ function ready(error
     openingLineChart.append("p")
       .attr("class","opening-line-chart-title")
       .style("width",widthSmallLine+"px")
-      .html("Search Interest 2015 - 2016<br><span class='opening-line-chart-title-span'>Moving 3-month Average for Rising Words</span>")
+      .html("Search Interest 2017 - 2018<br><span class='opening-line-chart-title-span'>Moving 3-month Average for Rising Words</span>")
       ;
 
     var topListSvg = openingLineChart
@@ -245,7 +316,7 @@ function ready(error
     });
 
     var termMaxes = [];
-
+    var dateExtent = 0;
     for (var year in topListDataMap){
       var maxVolume = [];
       topListDataMap[year].rhoExtent = d3.extent(topListDataMap[year].values,function(d){
@@ -268,9 +339,9 @@ function ready(error
 
         topListDataMap[year].values[term].weekArray = weekArray;
 
-        var rollingArray = movingAvg(smallLineWeeks.map(function(d,i){
+        var rollingArray = smallLineWeeks.map(function(d,i){
           return [i,+topListDataMap[year].values[term][d]];
-        }),46).map(function(d,i){
+        }).map(function(d,i){
           maxVolume.push(d[1]);
           return {date:i,volume:d[1]};
         });
@@ -281,11 +352,18 @@ function ready(error
           return +d.volume;
         });
 
-        if(wordsToShow.indexOf(topListDataMap[year].values[term].term) != -1){
+        var termDateExtent = d3.max(rollingArray,function(d){
+          return +d.date;
+        })
+
+        dateExtent = termDateExtent;
+
+
+
+        if(wordsToKeep.indexOf(topListDataMap[year].values[term].term) != -1 || wordsToShow.indexOf(topListDataMap[year].values[term].term) != -1){
           termMaxes.push(termMaxItem.volume);
         }
         if(compareWord.term == topListDataMap[year].values[term].term){
-
           compareWord.termMax = termMaxItem.volume;
           compareWord.termMaxDate = termMaxItem.date;
         }
@@ -293,11 +371,13 @@ function ready(error
         topListDataMap[year].values[term].termMax = termMaxItem.volume;
         topListDataMap[year].values[term].rollingArray = rollingArray;
         topListDataMap[year].values[term].topTen = false;
-        if(+topListDataMap[year].key == 2016 && term < 10){
-          topListDataMap[year].values[term].topTen = true
+        if(wordsToKeep.indexOf(topListDataMap[year].values[term]["term"]) > -1){
+        // if(+topListDataMap[year].key == 2018 && term < 10){
+          topListDataMap[year].values[term].topTen = true;
         }
       }
       topListDataMap[year].max = d3.max(maxVolume);
+
     }
 
     var yWideMax = d3.max(termMaxes);
@@ -305,13 +385,17 @@ function ready(error
     var yWideCompareMax = yWideMax;
 
     var rightColArray = topListDataMap.filter(function(d){
-      return d.key == "2016";
+      return d.key == "2018";
     })[0];
 
-    var max = rightColArray.max;
+    var smallLineData = rightColArray.values.filter(function(d){
+      return d.topTen == true;
+    });
+    //had this before //var max = rightColArray.max;
+    var max = d3.max(smallLineData,function(d){return +d.termMax});
 
-    var smallLineData = rightColArray.values.slice(0,10);
-    var x = d3.scaleLinear().domain([109,214]).range([0,widthSmallLine]);
+
+    var x = d3.scaleLinear().domain([dateExtent-104,dateExtent]).range([0,widthSmallLine]);
     var y = d3.scaleLinear().domain([0,max]).range([heightSmallLine,0]);
 
     var voronoiSmallLine = d3.voronoi()
@@ -343,7 +427,7 @@ function ready(error
       .attr("transform","translate("+marginSmallLine.left+","+(marginSmallLine.bottom+marginSmallLine.top+heightSmallLine+6)+")")
       .attr("class","top-list-new-svg-line-text-container")
       .selectAll("text")
-      .data(["2015","2016","2017"])
+      .data(["2017","2018","2019"])
       .enter()
       .append("text")
       .attr("class","top-list-new-svg-line-text")
@@ -351,7 +435,16 @@ function ready(error
         return widthSmallLine/2*i;
       })
       .attr("y",0)
-      .text(function(d){
+      .style("text-anchor",function(d){
+        if(d=="2019"){
+          return "end"
+        }
+        return null;
+      })
+      .html(function(d){
+        if(d=="2019"){
+          return "Sep 2019"
+        }
         return d;
       })
       ;
@@ -443,6 +536,16 @@ function ready(error
       })
       ;
 
+    topListDataMap = topListDataMap.sort(function(a,b){
+      return +b.key - +a.key;
+    });
+
+    topListDataMap[0].values = topListDataMap[0].values.sort(function(a,b){
+      b.bWord = wordsToKeep.indexOf(b.term);
+      a.aWord = wordsToKeep.indexOf(a.term);
+      return b.bWord - a.aWord;
+    });
+
     var topListYearColumn = topListContainer
       .selectAll("div")
       .data(topListDataMap)
@@ -450,7 +553,7 @@ function ready(error
       .append("div")
       .attr("class","top-list-new-year-column")
       .style("left",function(d){
-        if(+d.key != 2016){
+        if(+d.key != 2018){
           return "-1000px"
         }
         if(mobile){
@@ -461,16 +564,16 @@ function ready(error
       ;
 
     var titles = {
-      first:{main:"top rising definitions in 2016",sub:"Word definitions, ranked by Search interest&#185; growth"},
-      second:{topMain:-18,topSub:4,main:"2016 words in context",sub:"Search interest&#185; for historically popular words vs. 2016"},
-      third:{topMain:-60,topSub:-35,main:"2016 words vs. Peak &ldquo;Selfie&rdquo;",sub:"Maximum Search interest&#185; for historically popular words"},
-      fourth:{main:"The Rise And Fall Of 50+ Words",sub:"Search interest&#185; of words, 2013 - 2016"}
+      first:{main:"top rising definitions in 2018",sub:"Word definitions, ranked by Search interest&#185; growth"},
+      second:{topMain:-18,topSub:4,main:"2018 words in context",sub:"Search interest&#185; for historically popular words vs. 2018"},
+      third:{topMain:-60,topSub:-35,main:"2018 words vs. Peak &ldquo;Woke&rdquo;",sub:"Maximum Search interest&#185; for historically popular words"},
+      fourth:{main:"The Rise And Fall Of 50+ Words",sub:"Search interest&#185; of words, 2015 - 2018"}
     }
 
     if(mobile){
-      titles.second.sub = "Search interest&#185; for established words vs. 2016"
+      titles.second.sub = "Search interest&#185; for established words vs. 2018"
       titles.third.sub = "Max. Search interest&#185; for established words"
-      titles.fourth.sub = "Search interest&#185; for words, 2013 - 2016"
+      titles.fourth.sub = "Search interest&#185; for words, 2015 - 2018"
     }
 
     var leftColTitle = topListContainer
@@ -489,16 +592,13 @@ function ready(error
       .attr("class","top-list-new-year-container-year")
       ;
 
-
-
-
     topListBackgroundYear.append("p")
       .attr("class","top-list-new-year-container-year-text")
       .style("color",function(d){
         return highlightColor;
       })
       .text(function(d){
-        return "2016";
+        return "2018";
       })
       ;
 
@@ -515,7 +615,14 @@ function ready(error
       .attr("class","top-list-new-item-container")
       .selectAll("div")
       .data(function(d){
-        return d.values;
+        return d.values.sort(function(a,b){
+          if(a.topTen && +a.year == 2018 && b.topTen && +b.year == 2018){
+            var aIndex = wordsToKeep.indexOf(a.term);
+            var bIndex = wordsToKeep.indexOf(b.term);
+            return aIndex - bIndex;
+          }
+          return a - b;
+        });
       })
       .enter()
       .append("div")
@@ -525,7 +632,7 @@ function ready(error
         return rowHeight*i+"px";
       })
       .style("display",function(d){
-        if(d.topTen == false && +d.year == 2016){
+        if(d.topTen == false && +d.year == 2018){
           return "none";
         }
         return null;
@@ -827,7 +934,7 @@ function ready(error
       .attr("transform","translate("+marginLineWide.left+","+(marginLineWide.bottom+marginLineWide.top+heightLineWide)+")")
       .attr("class","top-list-new-wide-svg-axis")
       .selectAll("text")
-      .data(["2013","2014","2015","2016","2017"])
+      .data(["2015","2016","2017","2018","2019"])
       .enter()
       .append("text")
       .attr("class","top-list-new-wide-svg-axis-text")
@@ -835,7 +942,16 @@ function ready(error
         return widthLineWide/4*i;
       })
       .attr("y",0)
+      .style("text-anchor",function(d){
+        if(d=="2019"){
+          return "end"
+        }
+        return null;
+      })
       .text(function(d){
+        if(d=="2019"){
+          return "SEPT 2019"
+        }
         return d;
       })
       ;
@@ -851,10 +967,10 @@ function ready(error
 
     var fullTextWidth = 200;
 
-    var xWide = d3.scaleLinear().domain([0,214]).range([0,widthLineWide]);
+    var xWide = d3.scaleLinear().domain([dateExtent - 4*52,dateExtent]).range([0,widthLineWide]);
     var yWide = d3.scaleLinear().domain([0,rareWordThreshold*1.25]).range([heightLineWide,0]);
     var yWideFull = d3.scaleLinear().domain([0,yWideMax]).range([heightLineWide,0]);
-    var xWideFull = d3.scaleLinear().domain([0,214]).range([0,containerWidth-marginLineWide.left-fullTextWidth-rightSpacing]);
+    var xWideFull = d3.scaleLinear().domain([dateExtent - 4*52,dateExtent]).range([0,containerWidth-marginLineWide.left-fullTextWidth-rightSpacing]);
 
     if(mobile){
       xWideFull.range([0,widthLineWide])
@@ -929,8 +1045,6 @@ function ready(error
       .attr("y",(marginLineWide.top+yWideFull(compareWord.termMax))-4)
       .html(function(d){
         return "<tspan x='"+marginLineWide.left+"' dy='5'>Peak &ldquo;"+compareWord.term.replace(/\./g,' ')+"&rdquo;</tspan>";
-
-//        return "<tspan x='"+marginLineWide.left+"' dy='0'>Peak </tspan><tspan x='"+marginLineWide.left+"' dy='12'>&ldquo;"+compareWord.term.replace(/\./g,' ')+"&rdquo;</tspan>";
       })
       ;
 
@@ -1209,11 +1323,30 @@ function ready(error
         return .5;
       })
       .attr("d",function(d){
-        var dataPoints = d.rollingArray.filter(function(d){
-          return d.volume < rareWordThreshold;
-        })
-        var finalPointDate = dataPoints[dataPoints.length-1].date;
-        d.finalPointDate = finalPointDate - 1;
+
+        var dataPoints;
+
+        // if(){
+        //
+        // }
+        if (wordsToShow.indexOf(d.term) > -1 || wordsToKeep.indexOf(d.term) > -1){
+
+          dataPoints = d.rollingArray.filter(function(d){
+            return d.volume > rareWordThreshold;
+          })
+
+          finalPointDate = dataPoints[0].date;
+          d.finalPointDate = finalPointDate;
+        }
+        else{
+          var dataPoints = d.rollingArray;
+
+          var finalPointDate = dataPoints[dataPoints.length-1].date;
+          d.finalPointDate = finalPointDate - 1;
+        }
+
+
+
 
         var points = d.rollingArray.slice(0,d.finalPointDate);
         points.push({date:d.finalPointDate+1,volume:rareWordThreshold});
@@ -1234,7 +1367,6 @@ function ready(error
     var colorScaleTwo = d3.scaleLinear().domain([40,0]).range([".8","1"])
 
     var widthCompareCol = 180;
-
 
     var topListLineWideContainerCloudSelector = topListLineWideContainer;
     if(mobile){
@@ -1309,16 +1441,13 @@ function ready(error
         return colorScaleTwo(i);
       })
       .attr("class",function(d,i){
-        // if(i>14){
-        //   return "horz-word-cloud-text horz-word-cloud-text-hidden";
-        // }
         return "horz-word-cloud-text";
       })
       .html(function(d,i) {
-        if(i%25==0){
-          return "<span class='year-right-col' style=''>"+d.year+"</span><span class='number' style='font-size:9px;'>"+(i%25+1)+". </span><span class='cloud-term'>"+d.term.replace("."," ")+"</span>";
+        if(i==0){
+          return "<span class='year-right-col' style=''>"+d.year+"</span><span class='number' style='font-size:9px;'>"+(i+1)+". </span><span class='cloud-term'>"+d.term.replace("."," ")+"</span>";
         }
-        return "<span class='number' style='font-size:9px;'>"+(i%25+1)+". </span><span class='cloud-term'>"+d.term.replace("."," ")+"</span>";
+        return "<span class='number' style='font-size:9px;'>"+(i+1)+". </span><span class='cloud-term'>"+d.term.replace("."," ")+"</span>";
       })
       .on("click",function(d){
         var word = d.term;
@@ -1643,7 +1772,7 @@ function ready(error
         .style("height","7px")
         .style("top","24px")
         .style("background-color",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             return highlightColor;
           }
           return compareColor;
@@ -1659,7 +1788,7 @@ function ready(error
           return 500;
         })
         .style("font-weight",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             return null;
           }
           if(mobile){
@@ -1673,13 +1802,13 @@ function ready(error
         .style("font-size","10px")
         .style("transform","rotate(-45deg)")
         .style("color",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             return highlightColor;
           }
           return compareColor;
         })
         .style("opacity",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             if(mobile){
               return 0;
             }
@@ -1721,14 +1850,14 @@ function ready(error
           if(mobile){
             return 0;
           }
-          if (d.year == "2016"){
+          if (d.year == "2018"){
             return 800;
           }
           return 0;
         })
         .style("pointer-events","none")
         .style("left",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             if(mobile){
               return "0px";
             }
@@ -1738,7 +1867,7 @@ function ready(error
         })
         .filter(function(d){
           if(mobile){
-            if(d.year == "2016" || wordsToShow.indexOf(d.term) > -1){
+            if(d.year == "2018" || wordsToShow.indexOf(d.term) > -1){
               return d;
             }
             return null;
@@ -1761,13 +1890,13 @@ function ready(error
           if(mobile){
             return 0;
           }
-          if (d.year == "2016"){
+          if (d.year == "2018"){
             return 0;
           }
           return 800;
         })
         .style("left",function(d){
-          if(d.year == "2016" || wordsToShow.indexOf(d.term) > -1){
+          if(d.year == "2018" || wordsToShow.indexOf(d.term) > -1){
             return marginLineWide.left+xWide(d.finalPointDate)+"px";
           }
           return "-1000px";
@@ -1891,6 +2020,23 @@ function ready(error
       wideLinePathsVoronoiContainer.style("pointer-events",null)
       wideLinePathsVoronoiContainerTwo.style("pointer-events","all")
 
+
+
+      yWide.domain([0,yWideMax]);
+
+      compareLine
+        .attr("y1",marginLineWide.top+ yWide(compareWord.termMax)-2)
+        .attr("y2",marginLineWide.top+ yWide(compareWord.termMax)-2)
+        ;
+
+      compareLineRect
+        .attr("y",(marginLineWide.top+yWide(compareWord.termMax))-10)
+        ;
+
+      compareText
+        .attr("y",(marginLineWide.top+yWide(compareWord.termMax))-4)
+        ;
+
       topListLineWideCompare
         .transition()
         .duration(0)
@@ -1902,8 +2048,6 @@ function ready(error
         })
         .style("visibility","visible")
         ;
-
-      yWide.domain([0,yWideMax]);
 
       topListBackgroundYear.style("visibility","hidden");
 
@@ -1953,7 +2097,7 @@ function ready(error
           return totalLength + " " + 0;
         })
         .style("stroke",function(d){
-          if(d.year == "2016"){
+          if(d.year == "2018"){
             return highlightColor;
           }
           return compareColor;
@@ -1981,7 +2125,7 @@ function ready(error
         .transition()
         .duration(0)
         .style("left",function(d){
-          if(d.year == "2016" || wordsToShow.indexOf(d.term) > -1){
+          if(d.year == "2018" || wordsToShow.indexOf(d.term) > -1){
             return marginLineWide.left+xWide(d.finalPointDate)+"px";
           }
           return "-1000px";
@@ -2004,7 +2148,7 @@ function ready(error
           return 1000;
         })
         .style("left",function(d){
-          if(d.year == "2016" || wordsToShow.indexOf(d.term) != -1){
+          if(d.year == "2018" || wordsToShow.indexOf(d.term) != -1){
             return marginLineWide.left+xWide(d.termMaxDate-1)+"px";
           }
           return "-1000px";
@@ -2116,7 +2260,7 @@ function ready(error
 
       topListItem
         .filter(function(d){
-          return d.topTen == false && +d.year == 2016;
+          return d.topTen == false && +d.year == 2018;
         })
         .style("display",null)
         ;
@@ -2505,7 +2649,7 @@ function ready(error
             .transition()
             .duration(0)
             .style("left",function(d){
-              if(+d.key != 2016){
+              if(+d.key != 2018){
                 return "-1000px"
               }
               if(mobile){
@@ -2580,7 +2724,7 @@ function ready(error
               .transition()
               .duration(0)
               .style("stroke",function(d){
-                if(d.year == "2016"){
+                if(d.year == "2018"){
                   return highlightColor;
                 }
                 return compareColor;
@@ -2728,7 +2872,6 @@ function ready(error
           // ;
         })
 
-
     sectionScrollScene
         .on("progress",function(e){
           var progress = e.progress.toFixed(1)*10;
@@ -2810,13 +2953,13 @@ function ready(error
             .transition()
             .duration(0)
             .style("stroke",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return highlightColor;
               }
               return compareColor;
             })
             .style("stroke-opacity",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return .5;
               }
               return 1;
@@ -2893,7 +3036,7 @@ function ready(error
 
           topListItem
             .filter(function(d){
-              return d.year == "2016" || wordsToShow.indexOf(d.term) > -1;
+              return d.year == "2018" || wordsToShow.indexOf(d.term) > -1;
             })
             .transition()
             .duration(function(){
@@ -2919,7 +3062,6 @@ function ready(error
         }
       })
       ;
-
 
     var fullSceneDuration = viewportHeight - 100;
     var fullSceneOffset = 0;
@@ -3038,7 +3180,7 @@ function ready(error
               return 1;
             })
             .style("background-color",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return highlightColor;
               }
               return compareColor;
@@ -3052,7 +3194,7 @@ function ready(error
 
           topListItem
             .filter(function(d){
-              return d.topTen == false && +d.year == 2016;
+              return d.topTen == false && +d.year == 2018;
             })
             .style("display","none")
             ;
@@ -3063,14 +3205,14 @@ function ready(error
               if(mobile){
                 return 0;
               }
-              if(d.year != "2016" && wordsToShow.indexOf(d.term) == -1){
+              if(d.year != "2018" && wordsToShow.indexOf(d.term) == -1){
                 return 0;
               }
               return 500;
             })
             .style("width",lineWidth+"px")
             .style("left",function(d){
-              if(d.year == "2016" || wordsToShow.indexOf(d.term) != -1){
+              if(d.year == "2018" || wordsToShow.indexOf(d.term) != -1){
                 return marginLineWide.left+xWide(d.termMaxDate-1)+"px";
               }
               return "-1000px";
@@ -3089,7 +3231,7 @@ function ready(error
               return 500;
             })
             .style("font-weight",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return null;
               }
               if(mobile){
@@ -3102,13 +3244,13 @@ function ready(error
             .style("font-size","10px")
             .style("transform","rotate(-45deg)")
             .style("color",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return highlightColor;
               }
               return compareColor;
             })
             .style("opacity",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 if(mobile){
                   return 0;
                 }
@@ -3142,9 +3284,6 @@ function ready(error
             .style("stroke-opacity",function(d){
               return 0;
             })
-            // .attr("d",function(d){
-            //   return wideLine(d.rollingArray.slice(0,d.termMaxDate+1));
-            // })
             ;
 
           wideLinePaths
@@ -3166,7 +3305,7 @@ function ready(error
               return totalLength + " " + 0;
             })
             .style("stroke",function(d){
-              if(d.year == "2016"){
+              if(d.year == "2018"){
                 return highlightColor;
               }
               return compareColor;
@@ -3243,7 +3382,7 @@ function ready(error
   function buildHorzCloud(data){
 
     var wordCloudData = data.filter(function(d){
-      return toRemove.indexOf(d.term) == -1;
+      return toRemove.indexOf(d.term) == -1 && d.year > 2014;
     });
 
     wordCloudData = d3.nest().key(function(d){
@@ -3546,7 +3685,7 @@ function ready(error
   function geoHeatMap(){
 
     var heatMapWordSelected = d3.select(".geo-heat-map-word");
-    var wordSelected = "woke"
+    var wordSelected = "blockchain"
     var heatMapContainer = d3.select(".geo-heat-map");
     var rollingAmount = 4;
     var miniChartPaths;
@@ -3554,7 +3693,7 @@ function ready(error
 
     function miniMultiplesHeat(){
 
-      var timeParse = d3.timeParse("%-m/%-e/%y");
+      var timeParse = d3.timeParse("%m/%d/%Y");
       var timeFormat = d3.timeFormat("%b '%y");
       var date = timeParse("1/1/16")
       var paths = topojson.feature(usState, usState.objects.states).features;
@@ -3737,7 +3876,7 @@ function ready(error
 
     var nestedStates = d3.nest()
       .key(function(d){
-        return d.region;
+        return d.region.replace(" ","");
         //return statesMap.get(d.region)[1];
       })
       .sortKeys(function(a,b){
@@ -3745,6 +3884,7 @@ function ready(error
       })
       .entries(state_data)
       ;
+
 
     var dates = nestedStates[0].values.map(function(d){
       return d.date;
@@ -3757,14 +3897,15 @@ function ready(error
       ;
 
     var datesMap = d3.map(nestedDates,function(d){return d.key});
-    var terms = Object.keys(nestedStates[0].values[0]).filter(function(d){
-      return d != "date" && d!="region";
-    });
+
+    var terms = Object.keys(nestedStates[0].values[0]);
 
     var filtersContainer = d3.select(".geo-heat-map-filters");
 
     var filters = filtersContainer.selectAll("p")
-      .data(terms)
+      .data(terms.filter(function(d,i){
+        return i>3;
+      }))
       .enter()
       .append("p")
       .attr("class",function(d,i){
@@ -3880,14 +4021,9 @@ function ready(error
       nestedStates[state].termData = termData;
     }
 
-//    var colorsHeat = ["#ffffb2","#fed976","#feb24c","#fd8d3c","#f03b20","#bd0026","#ab0623"];
-    //var colorsHeat = ["#ffffb2","#fed976","#feb24c","#f03b20","#bd0026","#ab0623"];
-  var colorsHeat = ["#ffffb2","#fed976","#fd8d3c","#f03b20","#bd0026","#ab0623"];
-    // colorsHeat = d3.schemeRdPu[6];
+    var colorsHeat = ["#ffffb2","#fed976","#fd8d3c","#f03b20","#bd0026","#ab0623"];
     colorsHeat = ["#fff7f3", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177"]
-
     colorsHeat = ["#fff7f3", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177", "#49006a"]
-
     var heatMapLegend = d3.select(".geo-heat-map-legend")
       ;
 
@@ -4107,10 +4243,10 @@ function ready(error
       .attr("class","geo-heat-map-row-axis")
       .html(function(d,i){
         if(i==0){
-          return "Jan &lsquo;15";
+          return "Jan &lsquo;17";
         }
         if(i==Math.round(d3.select(this.parentNode.parentNode).selectAll(".geo-heat-map-row-box").size()/2)){
-          return "Jan &lsquo;16";
+          return "Jan &lsquo;18";
         }
         return null
       })
@@ -4162,19 +4298,23 @@ function ready(error
   var opacityScale = d3.scaleLinear().domain([0,1]).range([.05,.2])
   var container = d3.select(".top-word-cloud-container");
   d3.select(".top-word-cloud-box-text").style("opacity",1);
+
   d3.select(".top-word-cloud-button").attr("href","#").on("click",function(){
     var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0,window.screen.availHeight);
 
     d3.transition()
       .duration(500)
       .tween("scroll",scrollTween(viewportHeight));
-
   });
-  var height = -1215;
+
+  var height = -585;
   var count = 40;
-  var wordCount = 60;
+  var wordCount = 30;
+
   var wordCloudWords = container.selectAll("p")
-    .data(summary.slice(-wordCount))
+    .data(summary.filter(function(d){
+      return toRemove.indexOf(d.term) == -1;
+    }))
     .enter()
     .append("p")
     .attr("class","top-word-cloud-word top-word-cloud-word-term")
@@ -4233,6 +4373,6 @@ function ready(error
   geoHeatMap();
 
   d3.select("body").style("height",null).style("overflow",null);
-  d3.select(".top-section-text-title-sub-two").html("From &ldquo;selfie&rdquo; to &ldquo;woke,&rdquo; Google searches reveal how we adopt new words.")
+  d3.select(".top-section-text-title-sub-two").html("From &ldquo;selfie&rdquo; to &ldquo;juuling,&rdquo; Google searches reveal how we adopt new words.")
 //ready function
 };
