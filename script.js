@@ -184,7 +184,7 @@ function ready(error
   }
 
   summary = summary.filter(function(d){
-    return +d.year > 2013;
+    return +d.year > 2014;
   })
 
   var wordArray = [];
@@ -385,7 +385,7 @@ function ready(error
     var yWideCompareMax = yWideMax;
 
     var rightColArray = topListDataMap.filter(function(d){
-      return d.key == "2018";
+      return d.key == "2018" || d.key == "2017";
     })[0];
 
     var smallLineData = rightColArray.values.filter(function(d){
@@ -427,7 +427,7 @@ function ready(error
       .attr("transform","translate("+marginSmallLine.left+","+(marginSmallLine.bottom+marginSmallLine.top+heightSmallLine+6)+")")
       .attr("class","top-list-new-svg-line-text-container")
       .selectAll("text")
-      .data(["2017","2018","2019"])
+      .data(["2017","JAN 2018", "SEP 2018"])
       .enter()
       .append("text")
       .attr("class","top-list-new-svg-line-text")
@@ -436,14 +436,14 @@ function ready(error
       })
       .attr("y",0)
       .style("text-anchor",function(d){
-        if(d=="2019"){
+        if(d=="SEP 2018"){
           return "end"
         }
         return null;
       })
       .html(function(d){
-        if(d=="2019"){
-          return "Sep 2019"
+        if(d=="SEP 2018"){
+          return "Sep 2018"
         }
         return d;
       })
@@ -934,23 +934,27 @@ function ready(error
       .attr("transform","translate("+marginLineWide.left+","+(marginLineWide.bottom+marginLineWide.top+heightLineWide)+")")
       .attr("class","top-list-new-wide-svg-axis")
       .selectAll("text")
-      .data(["2015","2016","2017","2018","2019"])
+      .data(["2015","2016","2017","2018","SEP 2018"])
       .enter()
       .append("text")
       .attr("class","top-list-new-wide-svg-axis-text")
       .attr("x",function(d,i){
+        console.log(widthLineWide);
         return widthLineWide/4*i;
       })
       .attr("y",0)
       .style("text-anchor",function(d){
-        if(d=="2019"){
+        if(d=="SEP 2018"){
           return "end"
         }
         return null;
       })
       .text(function(d){
-        if(d=="2019"){
-          return "SEPT 2019"
+        if(d=="2018"){
+          return "JAN 2018"
+        }
+        if(d=="SEP 2018"){
+          return "SEPT 2018"
         }
         return d;
       })
@@ -1344,9 +1348,6 @@ function ready(error
           var finalPointDate = dataPoints[dataPoints.length-1].date;
           d.finalPointDate = finalPointDate - 1;
         }
-
-
-
 
         var points = d.rollingArray.slice(0,d.finalPointDate);
         points.push({date:d.finalPointDate+1,volume:rareWordThreshold});
