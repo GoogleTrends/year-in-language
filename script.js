@@ -422,6 +422,8 @@ function ready(error
       .append("g")
       .attr("class","top-list-new-svg-line-container")
 
+      console.log("here");
+
     topListSvg
       .append("g")
       .attr("transform","translate("+marginSmallLine.left+","+(marginSmallLine.bottom+marginSmallLine.top+heightSmallLine+6)+")")
